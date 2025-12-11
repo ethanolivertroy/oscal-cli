@@ -1,98 +1,138 @@
-# OSCAL Java Command Line Tool
+# OSCAL CLI
 
-A Java tool, providing a command line interface, that performs common operations on [Open Security Controls Assessment Language](https://pages.nist.gov/OSCAL/) (OSCAL) and [Metaschema](https://github.com/usnistgov/metaschema) content.
+A fast, lightweight command-line tool for working with [Open Security Controls Assessment Language](https://pages.nist.gov/OSCAL/) (OSCAL) documents.
 
-This open-source, tool offers a convenient way to manipulate OSCAL and Metaschema based content supporting the following operations:
+## Features
 
-- Converting OSCAL content between the OSCAL XML, JSON, and YAML formats.
-- Validating an OSCAL resources to ensure it is well-formed and valid.
-- Resolving OSCAL Profiles.
-- Validating a Metaschema model definition to ensure it is well-formed and valid.
-- Generating XML and JSON Schemas from a Metaschema model definition.
+- **Format Conversion**: Convert OSCAL documents between XML, JSON, and YAML formats
+- **Auto-detection**: Automatically detects input format from file extension or content
+- **Fast**: Converts the full NIST 800-53 catalog (10MB, 1000+ controls) in ~0.1 seconds
+- **Validation**: JSON Schema validation against official OSCAL 1.1.3 schemas
+- **Lightweight**: Single static binary (~6MB with embedded schemas), no runtime dependencies
+- **Cross-platform**: Builds for macOS, Linux, and Windows
 
-This work is intended to make it easier for OSCAL and Metaschema content authors to work with related content.
+## Installation
 
-This tool is based on the [Metaschema Java Tools](https://github.com/usnistgov/metaschema-java) and [OSCAL Java Library](https://github.com/usnistgov/liboscal-java/) projects.
-
-This effort is part of the National Institute of Standards and Technology (NIST) OSCAL Program.
-
-## Contributing to this code base
-
-Thank you for interest in contributing to the Metaschema Java framework. For complete instructions on how to contribute code, please read through our [CONTRIBUTING.md](CONTRIBUTING.md) documentation.
-
-## Public domain
-
-This project is in the worldwide [public domain](LICENSE.md). As stated in [CONTRIBUTING.md](CONTRIBUTING.md).
-
-
-## Building
-
-This project can be built with [Apache Maven](https://maven.apache.org/) version 3.8.4 or greater.
-
-The following instructions can be used to clone and build this project.
-
-1. Clone the GitHub repository.
+### From Source
 
 ```bash
-git clone --recurse-submodules https://github.com/usnistgov/oscal-cli.git 
+# Clone the repository
+git clone https://github.com/ethantroy/oscal-cli.git
+cd oscal-cli
+
+# Build
+make build
+
+# Or install to your GOPATH/bin
+make install
 ```
 
-2. Build the project with Maven
+### Pre-built Binaries
+
+Download the latest release for your platform from the [releases page](https://github.com/ethantroy/oscal-cli/releases).
+
+## Usage
+
+### Validate Command
+
+Validate OSCAL documents against official NIST JSON schemas:
 
 ```bash
-mvn install
+# Validate a catalog
+oscal validate catalog.json
+
+# Validate an XML document (auto-converted internally)
+oscal validate ssp.xml
+
+# Quiet mode (only output errors)
+oscal validate catalog.json --quiet
 ```
 
-## Installing
+The embedded schemas correspond to OSCAL version 1.1.3.
 
-### Installing pre-built Java package
+### Convert Command
 
-1.  Make a directory to install oscal-cli and cd into it. The example below uses the directory `/opt/oscal-cli`. Use your preferred directory.
-```
-mkdir -p /opt/oscal-cli && cd /opt/oscal-cli
-```
-NOTE: 
+Convert OSCAL documents between formats:
 
-2. Download the zipped oscal-cli Java package. Download your preferred version, but we recommend [the latest stable release on the Maven Central repository](https://repo1.maven.org/maven2/gov/nist/secauto/oscal/tools/oscal-cli/cli-core/). You may also download [development snapshots](https://oss.sonatype.org/content/repositories/snapshots/gov/nist/secauto/oscal/tools/oscal-cli/) to evaluate new features or bug fixes merged into develop before they are finalized in a published release.
+```bash
+# Convert JSON to XML
+oscal convert catalog.json --to xml
 
-```
-wget -q https://repo1.maven.org/maven2/gov/nist/secauto/oscal/tools/oscal-cli/cli-core/1.0.1/cli-core-1.0.1-oscal-cli.zip.asc # download the release signature
-wget -q https://repo1.maven.org/maven2/gov/nist/secauto/oscal/tools/oscal-cli/cli-core/1.0.1/cli-core-1.0.1-oscal-cli.zip # download the release archive
-gpg --keyserver hkps://pgp.mit.edu:443 --recv-keys 6387E83B4828A504 # import or re-import the NIST OSCAL Release Engineering Key
-gpg --verify cli-core-1.0.1-oscal-cli.zip.asc # verify the signature for the release with signing key
-```
+# Convert XML to YAML with output file
+oscal convert catalog.xml --to yaml --output catalog.yaml
 
-3. Extract oscal-cli into the directory.
-```
-unzip cli-core-1.0.1-oscal-cli.zip
+# Convert and redirect to file
+oscal convert catalog.xml --to json > catalog.json
+
+# Overwrite existing output file
+oscal convert catalog.json --to xml --output catalog.xml --overwrite
 ```
 
-4. (Recommended) Add oscal-cli's directory to your path.
-```
-# temporarily add oscal-cli to your terminal's instance path
-PATH=$PATH:/opt/oscal-cli/bin
+### Supported Document Types
 
-# add oscal-cli to your environment (e.g., all terminals)
-export PATH=$PATH:/opt/oscal-cli/bin
-```
-NOTE: You can also add oscal-cli's directory to your path in shell profile to make oscal-cli permamently available.
+- Catalog
+- Profile
+- System Security Plan (SSP)
+- Component Definition
+- Assessment Plan
+- Assessment Results
+- Plan of Action and Milestones (POA&M)
 
-## Running 
+### Version
 
-Run help to make sure everything work
-```
-# if oscal-cli directory added to your path
-oscal-cli --help
-
-# if you did not add oscal-cli directory to your path
-/opt/oscal-cli/bin/oscal-cli --help
+```bash
+oscal version
 ```
 
+## Development
 
-## Contact us
+### Prerequisites
 
-Maintainer: [NIST OSCAL Team](https://pages.nist.gov/OSCAL/contact/) - [NIST](https://www.nist.gov/) [Information Technology Labratory](https://www.nist.gov/itl), [Computer Security Division](https://www.nist.gov/itl/csd)
+- Go 1.21 or later
+- Make (optional, for convenience commands)
 
-Email us: [oscal@nist.gov](mailto:oscal@nist.gov)
+### Building
 
-Chat with us: [Gitter usnistgov-OSCAL/Lobby](https://gitter.im/usnistgov-OSCAL/Lobby)
+```bash
+# Build for current platform
+make build
+
+# Build for all platforms
+make build-all
+
+# Run tests
+make test
+
+# Clean build artifacts
+make clean
+```
+
+### Project Structure
+
+```
+oscal-cli/
+├── cmd/oscal/          # CLI entry point
+├── internal/cli/       # CLI commands (cobra)
+├── pkg/oscal/
+│   ├── model/          # OSCAL document types
+│   ├── io/             # Format detection, load/save
+│   └── validate/       # Validation (future)
+└── testdata/           # Test fixtures
+```
+
+## Roadmap
+
+- [x] `validate` command with JSON Schema validation
+- [ ] Profile resolution (`profile resolve`)
+- [ ] HTML rendering (`catalog render`)
+- [ ] OSCAL constraint validation (beyond schema)
+
+## License
+
+This project is in the public domain. See [LICENSE.md](LICENSE.md) for details.
+
+## Related Projects
+
+- [NIST OSCAL](https://pages.nist.gov/OSCAL/) - Official OSCAL specification
+- [liboscal-java](https://github.com/usnistgov/liboscal-java) - NIST's Java OSCAL library
+- [go-oscal](https://github.com/defenseunicorns/go-oscal) - Defense Unicorns Go OSCAL library

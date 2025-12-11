@@ -1,0 +1,41 @@
+{
+  "catalog": {
+    "uuid": "a0dab1ce-5f27-4f54-b113-6a41a4581234",
+    "metadata": {
+      "title": "Simple Test Catalog",
+      "last-modified": "2024-01-15T12:00:00Z",
+      "version": "1.0.0",
+      "oscal-version": "1.1.2"
+    },
+    "groups": [
+      {
+        "id": "ac",
+        "title": "Access Control",
+        "controls": [
+          {
+            "id": "ac-1",
+            "title": "Policy and Procedures",
+            "parts": [
+              {
+                "id": "ac-1_smt",
+                "name": "statement",
+                "prose": "Develop, document, and disseminate access control policies."
+              }
+            ]
+          },
+          {
+            "id": "ac-2",
+            "title": "Account Management",
+            "parts": [
+              {
+                "id": "ac-2_smt",
+                "name": "statement",
+                "prose": "Manage system accounts."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

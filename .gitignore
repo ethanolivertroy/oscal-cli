@@ -1,12 +1,25 @@
-.pmd
-.pmdruleset.xml
-.project
-.settings/
-.checkstyle
-.classpath
-target/
-.ruleset
-.fbExcludeFilterFile
-pom.xml.releaseBackup
-release.properties
-.factorypath
+# Binary
+oscal
+oscal.exe
+
+# Build artifacts
+dist/
+
+# Test data (downloaded files)
+testdata/*.json
+testdata/*.xml
+testdata/*.yaml
+!testdata/simple-*.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Go
+vendor/
