@@ -131,8 +131,13 @@ oscal-cli/
 
 This project is in the public domain. See [LICENSE.md](LICENSE.md) for details.
 
+## Acknowledgments
+
+This project is a Go rewrite of NIST's [oscal-cli](https://github.com/usnistgov/oscal-cli), originally written in Java. Thanks to NIST and the OSCAL team for their work on the original tool and the OSCAL specification.
+
 ## Related Projects
 
 - [NIST OSCAL](https://pages.nist.gov/OSCAL/) - Official OSCAL specification
+- [oscal-cli (Java)](https://github.com/usnistgov/oscal-cli) - NIST's original Java CLI (this project's inspiration)
 - [liboscal-java](https://github.com/usnistgov/liboscal-java) - NIST's Java OSCAL library
 - [go-oscal](https://github.com/defenseunicorns/go-oscal) - Defense Unicorns Go OSCAL library
