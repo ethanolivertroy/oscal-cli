@@ -1,5 +1,7 @@
 # OSCAL CLI
 
+> **Project moved.** oscal-cli has been integrated into [Open Control Tools](https://github.com/ethanolivertroy/open-ctrl-tools).
+
 A fast, lightweight command-line tool for working with [Open Security Controls Assessment Language](https://pages.nist.gov/OSCAL/) (OSCAL) documents.
 
 ## Features
